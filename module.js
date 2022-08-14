@@ -1,78 +1,121 @@
-const UI = function () {
-  this.prodImgSelector = ".js-product-img";
-  this.prodNameSelector = ".js-product-name";
-  this.prodCatSelector = ".js-product-category";
-  this.prodDescSelector = ".js-product-description";
-  this.prodPriceSelector = ".js-product-price";
+class UI {
+  constructor(node) {
+    this.node = node;
 
-  this.prodImgEl = document.querySelector(this.prodImgSelector);
-  this.prodNameEl = document.querySelector(this.prodNameSelector);
-  this.prodCatEl = document.querySelector(this.prodCatSelector);
-  this.prodDescEl = document.querySelector(this.prodDescSelector);
-  this.prodPriceEl = document.querySelector(this.prodPriceSelector);
-};
+    this.prodImgSelector = ".js-product-img";
+    this.prodNameSelector = ".js-product-name";
+    this.prodCatSelector = ".js-product-category";
+    this.prodDescSelector = ".js-product-description";
+    this.prodPriceSelector = ".js-product-price";
 
-UI.prototype.setProdImg = function (src) {
-  this.prodImgEl.src = src;
-};
+    this.prodImgEl = this.node.querySelector(this.prodImgSelector);
+    this.prodNameEl = this.node.querySelector(this.prodNameSelector);
+    this.prodCatEl = this.node.querySelector(this.prodCatSelector);
+    this.prodDescEl = this.node.querySelector(this.prodDescSelector);
+    this.prodPriceEl = this.node.querySelector(this.prodPriceSelector);
+  }
 
-UI.prototype.setProdName = function (name) {
-  this.prodNameEl.textContent = name;
-};
+  setProdImg = function (src) {
+    this.prodImgEl.src = src;
+  };
 
-UI.prototype.setProdCat = function (category) {
-  this.prodCatEl.textContent = category;
-};
+  setProdName = function (name) {
+    this.prodNameEl.textContent = name;
+  };
 
-UI.prototype.setProdDesc = function (description) {
-  this.prodDescEl.textContent = description;
-};
+  setProdCat = function (category) {
+    this.prodCatEl.textContent = category;
+  };
 
-UI.prototype.setProdPrice = function (price) {
-  this.prodPriceEl.textContent = price;
-};
+  setProdDesc = function (description) {
+    this.prodDescEl.textContent = description;
+  };
 
-const Product = function () {
-  this.imageSrc = "src/img/discatcher.jpeg";
-  this.name = "DisCatcher Target";
-  this.category = "Discgolf";
-  this.description =
-    "a chain grid that catches fast and slow putts, heavy and light discs like no other target";
-  this.price = 399;
-};
+  setProdPrice = function (price) {
+    this.prodPriceEl.textContent = price;
+  };
 
-Product.prototype.getImg = function () {
-  return this.imageSrc;
-};
+  appendTo(listElement) {
+    listElement.appendChild(this.node);
+  }
+}
 
-Product.prototype.getName = function () {
-  return this.name;
-};
+class Product {
+  constructor(productInfo) {
+    this.imageSrc = productInfo.imageSrc;
+    this.name = productInfo.name;
+    this.category = productInfo.category;
+    this.description = productInfo.description;
+    this.price = productInfo.price;
+  }
 
-Product.prototype.getCategory = function () {
-  return this.category;
-};
+  getImg = function () {
+    return this.imageSrc;
+  };
 
-Product.prototype.getDesc = function () {
-  return `${this.name} is ${this.description}`;
-};
+  getName = function () {
+    return this.name;
+  };
 
-Product.prototype.getPrice = function () {
-  return `€${this.price}`;
-};
+  getCategory = function () {
+    return this.category;
+  };
 
-const ProductFactory = new Product();
+  getDesc = function () {
+    return `${this.name} is ${this.description}`;
+  };
 
-const productImg = ProductFactory.getImg();
-const productName = ProductFactory.getName();
-const productCat = ProductFactory.getCategory();
-const productDesc = ProductFactory.getDesc();
-const productPrice = ProductFactory.getPrice();
+  getPrice = function () {
+    return `€${this.price}`;
+  };
+}
 
-const ShopUI = new UI();
+const Poduct1 = new Product({
+  imageSrc: "src/img/discatcher.jpeg",
+  name: "DisCatcher Target",
+  category: "Discgolf",
+  description:
+    "a chain grid that catches fast and slow putts, heavy and light discs like no other target",
+  price: 399,
+});
+
+const productImg = Poduct1.getImg();
+const productName = Poduct1.getName();
+const productCat = Poduct1.getCategory();
+const productDesc = Poduct1.getDesc();
+const productPrice = Poduct1.getPrice();
+
+const UITemplate = document.querySelector(".js-product");
+const ShopUI = new UI(UITemplate);
 
 ShopUI.setProdImg(productImg);
 ShopUI.setProdName(productName);
 ShopUI.setProdCat(productCat);
 ShopUI.setProdDesc(productDesc);
 ShopUI.setProdPrice(productPrice);
+
+const Poduct2 = new Product({
+  imageSrc: "src/img/dog.jpeg",
+  name: "Hero SuperAero",
+  category: "Discgolf",
+  description: "a disc that floats like a butterfly, holds up like a SuperHero",
+  price: 14,
+});
+
+const productImg2 = Poduct2.getImg();
+const productName2 = Poduct2.getName();
+const productCat2 = Poduct2.getCategory();
+const productDesc2 = Poduct2.getDesc();
+const productPrice2 = Poduct2.getPrice();
+
+const UIElement2 = UITemplate.cloneNode(true);
+const ShopUI2 = new UI(UIElement2);
+
+ShopUI2.setProdImg(productImg2);
+ShopUI2.setProdName(productName2);
+ShopUI2.setProdCat(productCat2);
+ShopUI2.setProdDesc(productDesc2);
+ShopUI2.setProdPrice(productPrice2);
+
+const ProductListElement = document.querySelector(".js-product-list");
+ShopUI2.appendTo(ProductListElement);
